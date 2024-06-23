@@ -1,11 +1,11 @@
 import React from 'react'
-import { Button } from '@/components/ui/button'
+import PageHeader from '@/components/PageHeader'
 
 const page = () => {
   return (
     <div className="p-5 w-full h-full bg-white dark:bg-slate-800 rounded-md">
-      page
-      <Button>Hello</Button>
+      <PageHeader pageTitle={'View Business Initiative'}/> 
+      
     </div>
   )
 }

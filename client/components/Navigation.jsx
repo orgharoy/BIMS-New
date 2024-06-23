@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils"
 const Navigation = () => {
     const { setTheme } = useTheme()
     return (
-        <nav className="container mx-auto h-16 flex items-center justify-between shadow-md dark:shadow-none">
+        <nav className="w-full px-8 h-16 flex items-center justify-between shadow-md dark:shadow-none dark:border-b">
             <Link href='/' className="h-8 cursor-pointer flex items-center gap-2">
               <Logo />
               <h1 className="font-bold text-2xl">StratX</h1>
