@@ -36,9 +36,19 @@ const page = () => {
         console.log(values);
     }
 
+    function handlePrevious() {
+        setPageNum((prevPageNum) => pageNum === 1 ? 1 : prevPageNum - 1);
+        console.log(pageNum);
+    }
+
+    function handleNext() {
+        setPageNum((prevPageNum) => pageNum === 5 ? 5 : prevPageNum + 1);
+        console.log(pageNum);
+    }
+
   return (
     <div className="h-screen w-screen flex items-center justify-center">
-        <div className='grid md:grid-cols-4 h-4/5 py-5 pl-5 rounded-lg bg-black bg-opacity-10 dark:bg-white dark:bg-opacity-10 gap-5 '>
+        <div className='grid md:grid-cols-4 h-3/4 py-5 pl-5 rounded-lg bg-black bg-opacity-10 dark:bg-white dark:bg-opacity-10 gap-5 '>
             <div className="h-full col-span-1 p-5 rounded-lg bg-[#7c3bed] dark:bg-[#131023] ">
                 <div className="pb-3">
                     <h7 className="uppercase text-sm font-semibold text-slate-300 dark:text-gray-500">Step 1</h7>
@@ -61,254 +71,27 @@ const page = () => {
                     <h4 className="text-white">Plan Information</h4>
                 </div>
             </div>
-            <div className="h-full overflow-y-scroll col-span-3 md:pl-14 py-5">
+            <div className="h-full col-span-3 md:pl-14 py-5">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pr-5">
-                        <FormField
-                            control={form.control}
-                            name="companyName"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Company Name</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="shadcn" {...field} />
-                                    </FormControl>
-                                    {/* <FormDescription>
-                                        This is your company name
-                                    </FormDescription> */}
-                                    <div className="h-1">
-                                        <FormMessage/>
-                                    </div>
-                                </FormItem>
-                            )}
-                        />
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-between h-full pr-5">
+                        <div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <FormField
-                                control={form.control}
-                                name="industry"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Industry</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select an industry" />
-                                            </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {industries.map((industry, index) => (
-                                                    <SelectItem key={index} value={industry}>
-                                                    {industry}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                        {/* <FormDescription>
-                                            You can manage email addresses in your{" "}
-                                            <Link href="/examples/forms">email settings</Link>.
-                                        </FormDescription> */}
-                                        <div className="h-1">
-                                            <FormMessage/>
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
-
-                            <FormField
-                                control={form.control}
-                                name="companySize"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Company Size</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Company Size" />
-                                            </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {companySizes.map((companySize, index) => (
-                                                    <SelectItem key={index} value={companySize}>
-                                                    {companySize}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                        {/* <FormDescription>
-                                            You can manage email addresses in your{" "}
-                                            <Link href="/examples/forms">email settings</Link>.
-                                        </FormDescription> */}
-                                        <div className="h-1">
-                                            <FormMessage/>
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
+                            {
+                                pageNum === 1 && <PageOne form={form} industries={industries} companySizes={companySizes} countries={countries} />
+                            }
+                            {
+                                pageNum === 2 && <PageTwo form={form} />
+                            }
 
                         </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <FormField
-                                control={form.control}
-                                name="streetAddress"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Street Address</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Street Address" {...field} />
-                                        </FormControl>
-                                        {/* <FormDescription>
-                                            You can manage email addresses in your{" "}
-                                            <Link href="/examples/forms">email settings</Link>.
-                                        </FormDescription> */}
-                                        <div className="h-1">
-                                            <FormMessage/>
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
-
-                            <FormField
-                                control={form.control}
-                                name="city"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>City</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="City" {...field} />
-                                        </FormControl>
-                                        {/* <FormDescription>
-                                            You can manage email addresses in your{" "}
-                                            <Link href="/examples/forms">email settings</Link>.
-                                        </FormDescription> */}
-                                        <div className="h-1">
-                                            <FormMessage/>
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
-
+                        <div className="flex space-x-4">
+                            <Button variant="secondary" onClick={handlePrevious}>Previous</Button>
+                            {
+                                pageNum !== 5 
+                                    ? <Button onClick={handleNext}>Next</Button> 
+                                    : <Button type="submit">Submit</Button>
+                            }
                         </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <FormField
-                                control={form.control}
-                                name="stateOrProvince"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>State/Province</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="State/Province" {...field} />
-                                        </FormControl>
-                                        {/* <FormDescription>
-                                            You can manage email addresses in your{" "}
-                                            <Link href="/examples/forms">email settings</Link>.
-                                        </FormDescription> */}
-                                        <div className="h-1">
-                                            <FormMessage/>
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
-
-                            <FormField
-                                control={form.control}
-                                name="postalCode"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Postal Code</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Postal Code" {...field} />
-                                        </FormControl>
-                                        {/* <FormDescription>
-                                            You can manage email addresses in your{" "}
-                                            <Link href="/examples/forms">email settings</Link>.
-                                        </FormDescription> */}
-                                        <div className="h-1">
-                                            <FormMessage/>
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
-
-                            <FormField
-                                control={form.control}
-                                name="country"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Country</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select a country" />
-                                            </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {countries.map((country, index) => (
-                                                    <SelectItem key={index} value={country}>
-                                                    {country}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                        {/* <FormDescription>
-                                            You can manage email addresses in your{" "}
-                                            <Link href="/examples/forms">email settings</Link>.
-                                        </FormDescription> */}
-                                        <div className="h-1">
-                                            <FormMessage/>
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
-
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <FormField
-                                control={form.control}
-                                name="phoneNumber"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Phone Number</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Phone Number" {...field} />
-                                        </FormControl>
-                                        {/* <FormDescription>
-                                            You can manage email addresses in your{" "}
-                                            <Link href="/examples/forms">email settings</Link>.
-                                        </FormDescription> */}
-                                        <div className="h-1">
-                                            <FormMessage/>
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
-
-                            <FormField
-                                control={form.control}
-                                name="emailAddress"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Email Address</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Email Address" {...field} />
-                                        </FormControl>
-                                        {/* <FormDescription>
-                                            You can manage email addresses in your{" "}
-                                            <Link href="/examples/forms">email settings</Link>.
-                                        </FormDescription> */}
-                                        <div className="h-1">
-                                            <FormMessage/>
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
-
-                        </div>
-                        
-                        <Button type="submit">Submit</Button>
                     </form>
                 </Form>
             </div>
@@ -318,3 +101,255 @@ const page = () => {
 }
 
 export default page
+
+
+function PageOne({ form, industries, companySizes, countries }){
+    return (
+        <>
+            <div className="mb-5">
+                <FormField
+                    control={form.control}
+                    name="companyName"
+                    render={({ field }) => (
+                        <FormItem>
+                            <div className="w-full flex items-center justify-between h-4">
+                                <FormLabel>Company Name<span className="text-red-600 ml-1">*</span></FormLabel>
+                                <div>
+                                    <FormMessage/>
+                                </div>
+                            </div>
+                            
+                            <FormControl>
+                                <Input placeholder="Jahed International Corp" {...field} />
+                            </FormControl>
+
+                        </FormItem>
+                    )}
+                />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
+                <FormField
+                    control={form.control}
+                    name="industry"
+                    render={({ field }) => (
+                        <FormItem>
+                            <div className="w-full flex items-center justify-between h-4">
+                                <FormLabel>Industry<span className="text-red-600 ml-1">*</span></FormLabel>
+                                <div>
+                                    <FormMessage/>
+                                </div>
+                            </div>
+                            
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select an industry" />
+                                </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    {industries.map((industry, index) => (
+                                        <SelectItem key={index} value={industry}>
+                                        {industry}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="companySize"
+                    render={({ field }) => (
+                        <FormItem>
+                            <div className="w-full flex items-center justify-between h-4">
+                                <FormLabel>Company Size<span className="text-red-600 ml-1">*</span></FormLabel>
+                                <div>
+                                    <FormMessage/>
+                                </div>
+                            </div>
+                            
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Company Size" />
+                                </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    {companySizes.map((companySize, index) => (
+                                        <SelectItem key={index} value={companySize}>
+                                        {companySize}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                         </FormItem>
+                    )}
+                />
+
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
+                <FormField
+                    control={form.control}
+                    name="streetAddress"
+                    render={({ field }) => (
+                        <FormItem>
+                            <div className="w-full flex items-center justify-between h-4">
+                                <FormLabel>Street Address<span className="text-red-600 ml-1">*</span></FormLabel>
+                                <div>
+                                    <FormMessage/>
+                                </div>
+                            </div>
+                            <FormControl>
+                                <Input placeholder="Street Address" {...field} />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="city"
+                    render={({ field }) => (
+                        <FormItem>
+                            <div className="w-full flex items-center justify-between h-4">
+                                <FormLabel>City<span className="text-red-600 ml-1">*</span></FormLabel>
+                                <div>
+                                    <FormMessage/>
+                                </div>
+                            </div>
+                            
+                            <FormControl>
+                                <Input placeholder="City" {...field} />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-5">
+                <FormField
+                    control={form.control}
+                    name="stateOrProvince"
+                    render={({ field }) => (
+                        <FormItem>
+                            <div className="w-full flex items-center justify-between h-4">
+                                <FormLabel>State/Province<span className="text-red-600 ml-1">*</span></FormLabel>
+                                <div>
+                                    <FormMessage/>
+                                </div>
+                            </div>
+                            
+                            <FormControl>
+                                <Input placeholder="State/Province" {...field} />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="postalCode"
+                    render={({ field }) => (
+                        <FormItem>
+                            <div className="w-full flex items-center justify-between h-4">
+                                <FormLabel>Postal Code<span className="text-red-600 ml-1">*</span></FormLabel>
+                                <div>
+                                    <FormMessage/>
+                                </div>
+                            </div>
+                            
+                            <FormControl>
+                                <Input placeholder="Postal Code" {...field} />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="country"
+                    render={({ field }) => (
+                        <FormItem>
+                            <div className="w-full flex items-center justify-between h-4">
+                                <FormLabel>Country<span className="text-red-600 ml-1">*</span></FormLabel>
+                                <div>
+                                    <FormMessage/>
+                                </div>
+                            </div>
+                            
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select a country" />
+                                </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    {countries.map((country, index) => (
+                                        <SelectItem key={index} value={country}>
+                                        {country}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </FormItem>
+                    )}
+                />
+
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
+                <FormField
+                    control={form.control}
+                    name="phoneNumber"
+                    render={({ field }) => (
+                        <FormItem>
+                            <div className="w-full flex items-center justify-between h-4">
+                                <FormLabel>Phone Number<span className="text-red-600 ml-1">*</span></FormLabel>
+                                <div>
+                                    <FormMessage/>
+                                </div>
+                            </div>
+                            
+                            <FormControl>
+                                <Input placeholder="Phone Number" {...field} />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="emailAddress"
+                    render={({ field }) => (
+                        <FormItem>
+                            <div className="w-full flex items-center justify-between h-4">
+                                <FormLabel>Email Address<span className="text-red-600 ml-1">*</span></FormLabel>
+                                <div>
+                                    <FormMessage/>
+                                </div>
+                            </div>
+                            
+                            <FormControl>
+                                <Input placeholder="Email Address" {...field} />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+
+            </div>
+        </>
+    )
+}
+
+function PageTwo({ form }){
+    return (
+        <>
+
+        </>
+    )
+}
