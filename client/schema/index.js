@@ -12,5 +12,21 @@ export const RegisterSchema = z.object({
     phoneNumber: z.string().trim().min(1, { message: 'Required' }),
     emailAddress: z.string().trim().min(1, { message: 'Required' }),
 
+    contactPersonFirstName: z.string().trim().min(1, { message: 'Required' }),
+    contactPersonLastName: z.string().trim().min(1, { message: 'Required' }),
+    contactPersonPhoneNumber: z.string().trim().min(1, { message: 'Required' }),
+    contactPersonEmailAddress: z.string().trim().min(1, { message: 'Required' }),
+    contactPersonDesignation: z.string().trim().min(1, { message: 'Required' }),
+
+    accountInformationFirstName: z.string().trim().min(1, { message: 'Required' }),
+    accountInformationLastName: z.string().trim().min(1, { message: 'Required' }),
+    accountInformationPhoneNumber: z.string().trim().min(1, { message: 'Required' }),
+    accountInformationAddress: z.string().trim().min(1, { message: 'Required' }),
+    accountInformationDesignation: z.string().trim().min(1, { message: 'Required' }),
+    accountInformationPassword: z.string().trim().min(1, { message: 'Required' }),
+    accountInformationPasswordConfirm: z.string().trim().min(1, { message: 'Required' }),
+
+    subscriptionPlan: z.string().trim().min(1, { message: 'Required' }),
+
 
 })
